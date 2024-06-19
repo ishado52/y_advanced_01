@@ -13,6 +13,7 @@
     <body class="font-sans antialiased">
      <main>
         @yield('content')
+        <i class="bi bi-0-circle-fill"></i>a
      </main>
     </body>
 </html>
