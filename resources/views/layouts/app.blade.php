@@ -11,8 +11,8 @@
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-     <main>
-        @yield('content')
+     <main class="row">
+        <div class="col-xl-6 mx-auto">@yield('content')</div>
      </main>
     </body>
 </html>
