@@ -5,7 +5,8 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [PostController::class, 'index']);
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('post.show');
 Route::resource('posts', PostController::class)->only(['index', 'store', 'show', 'edit', 'update', 'destroy']);
 
 

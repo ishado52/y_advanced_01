@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Comment;
 
 
 use Illuminate\Http\Request;
@@ -54,9 +55,15 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $post_id = basename($request->path());
+        $post = Post::find($post_id);
+        $comments = Comment::findMany($post_id);
+        return view('post.show',[
+            'post'=>$post,
+            'comments'=>$comments
+        ]);
     }
 
     /**

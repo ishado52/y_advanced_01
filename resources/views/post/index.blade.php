@@ -13,7 +13,7 @@
 
             @foreach ($posts as $post)
             <li class="list-group-item py-3 list-group-item-action">
-                <a class="link-dark link-underline-opacity-0" href="">
+                <a class="link-dark link-underline-opacity-0" href="{{ route('post.show',['id'=>$post->id]) }}">
                     <span class="link-dark fs-5 fw-bolder d-block">{{$post->title}}</span>
                     <span class="d-block">{{$post->user->name}}</span>
                     <div class="row w-50">
