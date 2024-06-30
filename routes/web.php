@@ -5,7 +5,9 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::resource('/', PostController::class);
+Route::get('/', [PostController::class, 'index']);
+Route::resource('posts', PostController::class)->only(['index', 'store', 'show', 'edit', 'update', 'destroy']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+
+
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -11,7 +14,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('pages.index');
+        // ユーザー一覧の取得処理などを行う
+        $posts = Post::all();
+
+        // ビューを返す
+        return view('post.index', compact('posts'));
     }
 
     /**
@@ -27,7 +34,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|integer',
+            'title' => 'required|string|max:255',
+            'comment' => 'required|string',
+        ]);
+
+        // データを作成して保存する
+        $post = Post::create([
+            'user_id' => $request->user_id,
+            'title' => $request->title,
+            'comment' => $request->comment,
+        ]);
+
+        // レスポンス
+        return response()->json(['message' => '投稿が作成されました。', 'post' => $post]);
     }
 
     /**
