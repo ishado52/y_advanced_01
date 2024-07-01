@@ -38,8 +38,8 @@
             @endforeach
         </ul>
         <form action="" class="col-md-8 mx-auto mb-4">
-            <textarea class="form-control mb-4" name="" id="" cols="30" rows="10" placeholder="コメント内容"></textarea>
-            <input type="button" class="btn btn-primary w-100" value="書き込み">
+            <textarea id="input_comment_content" class="form-control mb-4" name="" id="" cols="30" rows="10" placeholder="コメント内容"></textarea>
+            <input type="button" id="btn_comment_submit" class="btn btn-primary w-100" value="書き込み">
         </form>
     </div>
 
@@ -90,19 +90,18 @@
         // 作成した投稿をajaxでpost
         // ajaxで投稿
         document.addEventListener('DOMContentLoaded', function() {
-            var btnSubmit = document.getElementById('btn_submit');
+            var btnSubmit = document.getElementById('btn_comment_submit');
 
             btnSubmit.addEventListener('click', function() {
-                var title = document.getElementById('input_title').value;
-                var comment = document.getElementById('input_comment').value;
+                var comment = document.getElementById('input_comment_content').value;
 
                 // CSRFトークンを取得
                 var token = document.head.querySelector('meta[name="csrf-token"]').content;
 
                 // Ajaxリクエストの設定
                 var xhr = new XMLHttpRequest();
-                var url = '{{ route('posts.store') }}';
-                var params = 'title=' + title + '&comment=' + comment + '&user_id=' +
+                var url = '{{ route('comments.store') }}';
+                var params = 'post_id=' + {{$post->id}} + '&comment=' + comment + '&user_id=' +
                     {{ Auth::user()->id }};
                 xhr.open('POST', url, true);
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -114,6 +113,7 @@
                             var response = JSON.parse(xhr.responseText);
                             console.log(response);
                             alert('投稿成功');
+                            window.location.reload();
                         } else {
                             console.error(xhr.responseText);
                             alert('投稿失敗');

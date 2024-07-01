@@ -84,6 +84,7 @@
                             var response = JSON.parse(xhr.responseText);
                             console.log(response);
                             alert('投稿成功');
+                            window.location.reload();
                         } else {
                             console.error(xhr.responseText);
                             alert('投稿失敗');

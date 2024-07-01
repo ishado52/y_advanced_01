@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('post.show');
 Route::resource('posts', PostController::class)->only(['index', 'store', 'show', 'edit', 'update', 'destroy']);
+Route::resource('comments', CommentController::class)->only(['index', 'store', 'show', 'edit', 'update', 'destroy']);
 
 
 Route::get('/dashboard', function () {

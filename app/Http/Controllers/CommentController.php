@@ -8,18 +8,13 @@ use App\Models\Comment;
 
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // ユーザー一覧の取得処理などを行う
-        $posts = Post::all();
-
-        // ビューを返す
-        return view('post.index', compact('posts'));
     }
 
     /**
@@ -37,19 +32,19 @@ class PostController extends Controller
     {
         $request->validate([
             'user_id' => 'required|integer',
-            'title' => 'required|string|max:255',
+            'post_id' => 'required|integer',
             'comment' => 'required|string',
         ]);
 
         // データを作成して保存する
-        $post = Post::create([
+        $comment = Comment::create([
             'user_id' => $request->user_id,
-            'title' => $request->title,
+            'post_id' => $request->post_id,
             'comment' => $request->comment,
         ]);
 
         // レスポンス
-        return response()->json(['message' => '投稿が作成されました。', 'post' => $post]);
+        return response()->json(['message' => 'コメントが投稿されました。']);
     }
 
     /**
@@ -57,13 +52,6 @@ class PostController extends Controller
      */
     public function show(Request $request)
     {
-        $post_id = basename($request->path());
-        $post = Post::find($post_id);
-        $comments = Comment::where('post_id','=',$post_id)->get();
-        return view('post.show',[
-            'post'=>$post,
-            'comments'=>$comments
-        ]);
     }
 
     /**
